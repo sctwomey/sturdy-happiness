@@ -24,3 +24,57 @@ function toTitle(str) {
     return splitStr.join(' ');
 
 };
+
+// This takes the user input and calls the weatherToSearch() function to search the OpenWeather API for a city's weather information.
+searchFormContainer.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    let cityName = toTitle(cityUserInput.value);
+
+    if (cityName !== "") {
+        weatherToSearch(cityName);
+    };
+
+});
+
+/ This function searches for the current weather and forecast information from the OpenWeather API.
+function weatherToSearch(cityName) {
+
+    let currentWeatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" +
+        weatherApiKey + "&units=imperial";
+
+    fetch(currentWeatherUrl).then(function (response) {
+
+        if (response.ok) {
+
+            response.json().then(function (data) {
+
+                currentWeatherToView(data);
+                searchHistoryToSave(cityName);
+
+            });
+
+        } else {
+            alert("Error: " + response.statusText);
+        };
+
+    });
+
+    let forecastUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" +
+        weatherApiKey + "&units=imperial";
+
+    fetch(forecastUrl).then(function (response) {
+
+        if (response.ok) {
+
+            response.json().then(function (data) {
+
+                forecastToView(data);
+            });
+
+        } else {
+            alert("Error: " + response.statusText);
+        };
+    });
+
+};
