@@ -117,3 +117,56 @@ function searchHistoryToView() {
     searchHistoryContainer.innerHTML = searchHistoryHtml;
 
 };
+
+// This function displays the weather and forecast information for the city saved in local storage.
+function weatherHistoryToView(event) {
+
+    let cityName = toTitle(event.target.textContent);
+    weatherToSearch(cityName);
+
+};
+
+// This function displays the current weather information on the webpage.
+function currentWeatherToView(data) {
+
+    let city = data.name;
+    let date = new Date(data.dt * 1000).toLocaleDateString('en-US', options);
+    let iconUrl = "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
+    let temp = data.main.temp;
+    let humidity = data.main.humidity;
+    let windSpeed = data.wind.speed;
+
+    let currentWeatherHtml = "<h4>" + city.toUpperCase() + "<br>(" + date + ")</h4>" +
+        "<h4>Current Weather: </h4>" + "<img src='" + iconUrl + "' alt='" + data.weather[0].description + "'>" +
+        "<p>Temperature: " + temp + " &deg;F</p>" + "<p>Humidity: " + humidity + "%</p>" + "<p>Wind Speed: " +
+        windSpeed + " mph</p>";
+
+    currentWeatherContainer.innerHTML = currentWeatherHtml;
+    currentWeatherContainer.classList.add("current-weather-container");
+
+};
+
+// This function displays the five (5) day forecast information on the webpage.
+function forecastToView(data) {
+
+    let informationToForecast = data.list.filter(function (info) {
+        return info.dt_txt.includes("12:00:00");
+    });
+
+    let forecastHtml = "<h3>5 Day <br> Weather <br> Forecast:</h3>";
+
+    informationToForecast.forEach(function (info) {
+        let date = new Date(info.dt * 1000).toLocaleDateString('en-US', options);
+        let iconUrl = "https://openweathermap.org/img/w/" + info.weather[0].icon + ".png";
+        let temp = info.main.temp;
+        let windSpeed = info.wind.speed;
+
+        forecastHtml += "<div>" + "<h5>" + date + "</h5>" + "<img src='" + iconUrl + "' alt='" +
+            info.weather[0].description + "'>" + "<p>Temp: " + temp + " &deg;F</p>" + "<p>Humidity: " +
+            info.main.humidity + "%</p>" + "<p>Wind Speed: " + windSpeed + " mph</p>" + "</div>";
+    });
+
+    forecastContainer.innerHTML = forecastHtml;
+    forecastContainer.classList.add("forecast-container");
+
+};
