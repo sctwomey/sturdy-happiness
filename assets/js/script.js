@@ -129,14 +129,14 @@ function weatherHistoryToView(event) {
 // This function displays the current weather information on the webpage.
 function currentWeatherToView(data) {
 
-    let city = data.name;
+    let cityName = data.name;
     let date = new Date(data.dt * 1000).toLocaleDateString('en-US', options);
     let iconUrl = "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
     let temp = data.main.temp;
     let humidity = data.main.humidity;
     let windSpeed = data.wind.speed;
 
-    let currentWeatherHtml = "<h4>" + city.toUpperCase() + "<br>(" + date + ")</h4>" +
+    let currentWeatherHtml = "<h4>" + cityName.toUpperCase() + "<br>(" + date + ")</h4>" +
         "<h4>Current Weather: </h4>" + "<img src='" + iconUrl + "' alt='" + data.weather[0].description + "'>" +
         "<p>Temperature: " + temp + " &deg;F</p>" + "<p>Humidity: " + humidity + "%</p>" + "<p>Wind Speed: " +
         windSpeed + " mph</p>";
