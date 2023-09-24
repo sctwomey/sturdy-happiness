@@ -37,7 +37,7 @@ searchFormContainer.addEventListener("submit", function (event) {
 
 });
 
-/ This function searches for the current weather and forecast information from the OpenWeather API.
+// This function searches for the current weather and forecast information from the OpenWeather API.
 function weatherToSearch(cityName) {
 
     let currentWeatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" +
