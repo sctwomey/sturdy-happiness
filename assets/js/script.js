@@ -78,3 +78,42 @@ function weatherToSearch(cityName) {
     });
 
 };
+
+// This function saves each search to the local storage.
+function searchHistoryToSave(cityName) {
+
+    let searchHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
+    searchHistory.push(cityName);
+
+    if (searchHistory.length > 5) {
+        searchHistory.shift();
+    };
+
+    let checkForCopies = [];
+
+    searchHistory.forEach(function (cityName) {
+        if (!checkForCopies.includes(cityName)) {
+            checkForCopies.push(cityName);
+        }
+    });
+
+    localStorage.setItem("searchHistory", JSON.stringify(checkForCopies)
+    );
+
+    searchHistoryToView();
+
+};
+
+// This function creates the buttons for each city saved in local storage, and displays the buttons on the webpage.
+function searchHistoryToView() {
+
+    let searchHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
+    let searchHistoryHtml = "<h3>Search History</h3>";
+
+    searchHistory.forEach(function (cityName) {
+        searchHistoryHtml += "<button class=button>" + cityName + "</button>";
+    });
+
+    searchHistoryContainer.innerHTML = searchHistoryHtml;
+
+};
