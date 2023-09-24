@@ -129,17 +129,18 @@ function weatherHistoryToView(event) {
 // This function displays the current weather information on the webpage.
 function currentWeatherToView(data) {
 
+    let weatherIconUrl = "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
     let cityName = data.name;
     let cityDate = new Date(data.dt * 1000).toLocaleDateString('en-US', options);
-    let weatherIconUrl = "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
+
     let cityTemp = data.main.temp;
     let cityHumidity = data.main.humidity;
     let cityWindSpeed = data.wind.speed;
 
     let currentWeatherHtml = "<h4>" + cityName.toUpperCase() + "<br>(" + cityDate + ")</h4>" +
-        "<h4>Current Weather: </h4>" + "<img src='" + weatherIconUrl + "' alt='" + data.weather[0].description + "'>" +
-        "<p>Temperature: " + cityTemp + " &deg;F</p>" + "<p>Humidity: " + cityHumidity + "%</p>" + "<p>Wind Speed: " +
-        cityWindSpeed + " mph</p>";
+        "<h4>Current Weather: </h4>" + "<img src='" + weatherIconUrl + "' alt='" + weatherIconUrl + "'>" +
+        "<p>Temperature: " + cityTemp + " &deg;F</p>" + "<p>Humidity: " + cityHumidity + "%</p>" +
+        "<p>Wind Speed: " + cityWindSpeed + " mph</p>";
 
     currentWeatherContainer.innerHTML = currentWeatherHtml;
     currentWeatherContainer.classList.add("current-weather-container");
@@ -156,14 +157,17 @@ function forecastToView(data) {
     let forecastHtml = "<h3>5 Day <br> Weather <br> Forecast:</h3>";
 
     informationToForecast.forEach(function (info) {
-        let cityDate = new Date(info.dt * 1000).toLocaleDateString('en-US', options);
+
         let weatherIconUrl = "https://openweathermap.org/img/w/" + info.weather[0].icon + ".png";
+        let cityDate = new Date(info.dt * 1000).toLocaleDateString('en-US', options);
+
         let cityTemp = info.main.temp;
+        let cityHumidity = info.main.humidity;
         let cityWindSpeed = info.wind.speed;
 
         forecastHtml += "<div>" + "<h5>" + cityDate + "</h5>" + "<img src='" + weatherIconUrl + "' alt='" +
-            info.weather[0].description + "'>" + "<p>Temp: " + cityTemp + " &deg;F</p>" + "<p>Humidity: " +
-            info.main.humidity + "%</p>" + "<p>Wind Speed: " + cityWindSpeed + " mph</p>" + "</div>";
+            weatherIconUrl + "'>" + "<p>Temp: " + cityTemp + " &deg;F</p>" + "<p>Humidity: " +
+            cityHumidity + "%</p>" + "<p>Wind Speed: " + cityWindSpeed + " mph</p>" + "</div>";
     });
 
     forecastContainer.innerHTML = forecastHtml;
