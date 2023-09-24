@@ -104,7 +104,7 @@ function searchHistoryToSave(cityName) {
 
 };
 
-// This function creates the buttons for each city saved in local storage, and displays the buttons on the webpage.
+// This function creates the buttons for each city saved in the local storage, and displays the buttons on the webpage.
 function searchHistoryToView() {
 
     let searchHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
@@ -118,7 +118,7 @@ function searchHistoryToView() {
 
 };
 
-// This function displays the weather and forecast information for the city saved in local storage.
+// This function displays the weather and forecast information for the city saved in the local storage.
 function weatherHistoryToView(event) {
 
     let cityName = toTitle(event.target.textContent);
@@ -171,7 +171,7 @@ function forecastToView(data) {
 
 };
 
-// This function clears the the local storage and refreshes the webpage.
+// This function clears the local storage and refreshes the webpage.
 let clearSearchHistory = function () {
 
     localStorage.clear();
@@ -179,10 +179,10 @@ let clearSearchHistory = function () {
 
 };
 
-// This calls the search history from local storage when the button with the city name is clicked.
+// This calls the search history from the local storage when the button with the city name is clicked.
 searchHistoryContainer.addEventListener("click", weatherHistoryToView);
 
-// This calls the clear local storage function when the button "Clear History" button is clicked.
+// This calls the clearSearchHistory() function when the button "Clear History" button is clicked.
 clearHistoryButton.addEventListener("click", clearSearchHistory);
 
 searchHistoryToView();
