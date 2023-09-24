@@ -179,7 +179,7 @@ let clearSearchHistory = function () {
 
 };
 
-// This calls the for the search history from local storage when the button with the city name is clicked.
+// This calls the search history from local storage when the button with the city name is clicked.
 searchHistoryContainer.addEventListener("click", weatherHistoryToView);
 
 // This calls the clear local storage function when the button "Clear History" button is clicked.
