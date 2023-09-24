@@ -29,18 +29,18 @@ function toTitle(str) {
 searchFormContainer.addEventListener("submit", function (event) {
     event.preventDefault();
 
-    let cityName = toTitle(cityUserInput.value);
+    let userInput = toTitle(cityUserInput.value);
 
-    if (cityName !== "") {
-        weatherToSearch(cityName);
+    if (userInput !== "") {
+        weatherToSearch(userInput);
     };
 
 });
 
 // This function searches for the current weather and forecast information from the OpenWeather API.
-function weatherToSearch(cityName) {
+function weatherToSearch(UserInput) {
 
-    let currentWeatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" +
+    let currentWeatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + UserInput + "&appid=" +
         weatherApiKey + "&units=imperial";
 
     fetch(currentWeatherUrl).then(function (response) {
@@ -50,7 +50,7 @@ function weatherToSearch(cityName) {
             response.json().then(function (data) {
 
                 currentWeatherToView(data);
-                searchHistoryToSave(cityName);
+                searchHistoryToSave(UserInput);
 
             });
 
@@ -60,7 +60,7 @@ function weatherToSearch(cityName) {
 
     });
 
-    let forecastUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" +
+    let forecastUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + UserInput + "&appid=" +
         weatherApiKey + "&units=imperial";
 
     fetch(forecastUrl).then(function (response) {
@@ -80,10 +80,10 @@ function weatherToSearch(cityName) {
 };
 
 // This function saves each search to the local storage.
-function searchHistoryToSave(cityName) {
+function searchHistoryToSave(UserInput) {
 
     let searchHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
-    searchHistory.push(cityName);
+    searchHistory.push(UserInput);
 
     if (searchHistory.length > 5) {
         searchHistory.shift();
@@ -91,9 +91,9 @@ function searchHistoryToSave(cityName) {
 
     let checkForCopies = [];
 
-    searchHistory.forEach(function (cityName) {
-        if (!checkForCopies.includes(cityName)) {
-            checkForCopies.push(cityName);
+    searchHistory.forEach(function (UserInput) {
+        if (!checkForCopies.includes(UserInput)) {
+            checkForCopies.push(UserInput);
         }
     });
 
@@ -110,8 +110,8 @@ function searchHistoryToView() {
     let searchHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
     let searchHistoryHtml = "<h3>Search History</h3>";
 
-    searchHistory.forEach(function (cityName) {
-        searchHistoryHtml += "<button class=button>" + cityName + "</button>";
+    searchHistory.forEach(function (UserInput) {
+        searchHistoryHtml += "<button class=button>" + UserInput + "</button>";
     });
 
     searchHistoryContainer.innerHTML = searchHistoryHtml;
@@ -121,8 +121,8 @@ function searchHistoryToView() {
 // This function displays the weather and forecast information for the city saved in the local storage.
 function weatherHistoryToView(event) {
 
-    let cityName = toTitle(event.target.textContent);
-    weatherToSearch(cityName);
+    let UserInput = toTitle(event.target.textContent);
+    weatherToSearch(UserInput);
 
 };
 
